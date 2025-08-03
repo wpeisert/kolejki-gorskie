@@ -1,0 +1,46 @@
+services:
+  php:
+    image: webdevops/php-nginx-dev:8.4
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ./.docker/vhost.conf:/opt/docker/etc/nginx/vhost.conf
+      - ./.docker/php.webdevops.ini:/opt/docker/etc/php/php.webdevops.ini
+    user: 1000:1000
+    ports:
+      - 8090:80
+  redis:
+    image: redis
+    volumes:
+      - redisdata:/data
+  mysql:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_HOST: "localhost"
+      MYSQL_DATABASE: 'kolejki'
+      MYSQL_USER: 'kolejki'
+      MYSQL_PASSWORD: 'kolejki'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    networks:
+      - internal
+    volumes:
+      - dbdata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: unless-stopped
+    ports:
+      - 8091:80
+networks:
+  internal:
+volumes:
+  dbdata:
+  redisdata:
