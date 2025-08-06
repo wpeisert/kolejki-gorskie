@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\Api\Coasters;
+use App\Controllers\Api\Wagons;
 use CodeIgniter\Router\RouteCollection;
 use App\Controllers\Pages;
 use App\Controllers\News;
@@ -18,3 +20,8 @@ $routes->get('pages', [Pages::class, 'index']);
 $routes->get('(:segment)', [Pages::class, 'view']);
 
 
+$routes->post('api/coasters', [Coasters::class, 'create']);
+$routes->put('api/coasters/(:num)', [Coasters::class, 'update']);
+
+$routes->post('api/coasters/(:num)/wagons', [Wagons::class, 'create']);
+$routes->delete('api/coasters/(:num)/wagons/(:num)', [Wagons::class, 'delete']);
