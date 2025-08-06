@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Services\Redis;
+use App\Services\RedisClient;
 use CodeIgniter\Config\BaseService;
 
 /**
@@ -28,4 +29,13 @@ class Services extends BaseService
 
          return new Redis();
      }
+
+    public static function redisclient($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('redisclient');
+        }
+
+        return new RedisClient();
+    }
 }

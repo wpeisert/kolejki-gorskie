@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\Redis;
+
 class CoastersModel
 {
     private array $data;
@@ -13,7 +15,10 @@ class CoastersModel
 
     public function save()
     {
+        /** @var Redis $redis */
         $redis = service('redis');
+        $this->data['id'] = $redis->saveCoaster($this->data);
+        return $this->data['id'];
     }
 
     public function getId(): ?int

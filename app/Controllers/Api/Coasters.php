@@ -16,10 +16,10 @@ class Coasters extends ResourceController
         }
         $coaster = new CoastersModel($data);
         $coaster->save();
-        return $coaster->getId();
+        return 'Created coaster ID: ' . $coaster->getId();
     }
 
-    public function update($id = null): void
+    public function update($id = null)
     {
         $body = $this->request->getBody();
         $data = json_decode($body, true);
@@ -29,5 +29,6 @@ class Coasters extends ResourceController
         $data['id'] = $id;
         $coaster = new CoastersModel($data);
         $coaster->save();
+        return 'Updated coaster ID: ' . $coaster->getId();
     }
 }
