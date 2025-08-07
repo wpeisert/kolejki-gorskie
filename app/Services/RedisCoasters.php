@@ -11,27 +11,20 @@ class RedisCoasters
     public function __construct()
     {
         $this->redisClient = service('redisclient');
-        $this->load();
+        $this->data = $this->redisClient->loadData();
     }
 
     public function saveCoaster(array $data): int
     {
         if (!isset($data['id'])) {
             $data['id'] = count($this->data);
+            $this->data[$data['id']] = $data;
+        } else {
+            $this->data[$data['id']] = array_merge($this->data[$data['id']], $data);
         }
-        $this->data[$data['id']] = $data;
-        $this->save();
+
+        $this->redisClient->saveData($this->data);
 
         return $data['id'];
-    }
-
-    private function load()
-    {
-        $this->data = $this->redisClient->loadData();
-    }
-
-    private function save()
-    {
-        $this->redisClient->saveData($this->data);
     }
 }
