@@ -2,7 +2,7 @@
 
 namespace Config;
 
-use App\Services\RedisCoasters;
+use App\Services\RedisStorage;
 use App\Services\RedisClient;
 use CodeIgniter\Config\BaseService;
 
@@ -21,19 +21,19 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
-     public static function redisCoasters($getShared = true)
+     public static function redisStorage($getShared = true)
      {
          if ($getShared) {
-             return static::getSharedInstance('redisCoasters');
+             return static::getSharedInstance('redisStorage');
          }
 
-         return new RedisCoasters();
+         return new RedisStorage();
      }
 
-    public static function redisclient($getShared = true)
+    public static function redisClient($getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('redisclient');
+            return static::getSharedInstance('redisClient');
         }
 
         return new RedisClient();
