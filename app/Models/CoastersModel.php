@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\Redis;
+use App\Services\RedisCoasters;
 
 class CoastersModel
 {
@@ -15,8 +15,8 @@ class CoastersModel
 
     public function save()
     {
-        /** @var Redis $redis */
-        $redis = service('redis');
+        /** @var RedisCoasters $redisCoasters */
+        $redis = service('redisCoasters');
         $this->data['id'] = $redis->saveCoaster($this->data);
         return $this->data['id'];
     }

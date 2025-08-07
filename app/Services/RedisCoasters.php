@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class Redis
+class RedisCoasters
 {
     private array $data;
 
