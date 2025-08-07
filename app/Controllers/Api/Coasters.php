@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Api;
 
-use App\Models\CoastersModel;
 use App\Services\RedisStorage;
 use CodeIgniter\RESTful\ResourceController;
 
