@@ -28,6 +28,10 @@ class RedisStorage
     public function updateCoaster(int $idCoaster, array $data): void
     {
         $this->loadData();
+        if (!isset($this->data[$idCoaster])) {
+            throw new \Exception('Non existent coaster ID: ' . $idCoaster);
+        }
+
         $this->data[$idCoaster] = array_merge($this->data[$idCoaster], $data);
         $this->saveData();
     }
@@ -35,6 +39,10 @@ class RedisStorage
     public function createWagon(int $idCoaster, array $data): int
     {
         $this->loadData();
+
+        if (!isset($this->data[$idCoaster])) {
+            throw new \Exception('Non existent coaster ID: ' . $idCoaster);
+        }
 
         $wagons = $this->data[$idCoaster]['wagons'] ?? [];
         $maxId = -1;
@@ -55,14 +63,21 @@ class RedisStorage
     {
         $this->loadData();
 
-        $wagons = $this->data[$idCoaster]['wagons'] ?? [];
+        if (!isset($this->data[$idCoaster])) {
+            throw new \Exception('Non existent coaster ID: ' . $idCoaster);
+        }
+
+        $wagonsOld = $this->data[$idCoaster]['wagons'] ?? [];
         $wagons = array_filter(
-            $wagons,
+            $wagonsOld,
             function ($wagon) use ($idWagon) {
                 return $wagon['idWagon'] != $idWagon;
             }
         );
         $wagons = array_values($wagons);
+        if (count($wagonsOld) === count($wagons)) {
+            throw new \Exception('Non existent wagon ID: ' . $idWagon . ' for coaster ID: ' . $idCoaster);
+        }
         $this->data[$idCoaster]['wagons'] = $wagons;
 
         $this->saveData();
