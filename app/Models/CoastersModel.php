@@ -17,12 +17,12 @@ class CoastersModel
     {
         /** @var RedisCoasters $redisCoasters */
         $redis = service('redisCoasters');
-        $this->data['id'] = $redis->saveCoaster($this->data);
-        return $this->data['id'];
+        $this->data['idCoaster'] = $redis->saveCoaster($this->data);
+        return $this->data['idCoaster'];
     }
 
-    public function getId(): ?int
+    public function getIdCoaster(): ?int
     {
-        return $this->data['id'];
+        return $this->data['idCoaster'];
     }
 }

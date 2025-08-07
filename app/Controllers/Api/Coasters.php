@@ -16,19 +16,19 @@ class Coasters extends ResourceController
         }
         $coaster = new CoastersModel($data);
         $coaster->save();
-        return 'Created coaster ID: ' . $coaster->getId();
+        return 'Created coaster ID: ' . $coaster->getIdCoaster();
     }
 
-    public function update($id = null)
+    public function update($idCoaster = null)
     {
         $body = $this->request->getBody();
         $data = json_decode($body, true);
         if (json_last_error()) {
             throw new \Exception();
         }
-        $data['id'] = $id;
+        $data['idCoaster'] = $idCoaster;
         $coaster = new CoastersModel($data);
         $coaster->save();
-        return 'Updated coaster ID: ' . $coaster->getId();
+        return 'Updated coaster ID: ' . $coaster->getIdCoaster();
     }
 }

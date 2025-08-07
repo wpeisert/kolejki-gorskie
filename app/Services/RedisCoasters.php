@@ -16,15 +16,15 @@ class RedisCoasters
 
     public function saveCoaster(array $data): int
     {
-        if (!isset($data['id'])) {
-            $data['id'] = count($this->data);
-            $this->data[$data['id']] = $data;
+        if (!isset($data['idCoaster'])) {
+            $data['idCoaster'] = count($this->data);
+            $this->data[$data['idCoaster']] = $data;
         } else {
-            $this->data[$data['id']] = array_merge($this->data[$data['id']], $data);
+            $this->data[$data['idCoaster']] = array_merge($this->data[$data['idCoaster']], $data);
         }
 
         $this->redisClient->saveData($this->data);
 
-        return $data['id'];
+        return $data['idCoaster'];
     }
 }
