@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Services\Monitor;
 use App\Services\RedisStorage;
 use App\Services\RedisClient;
 use CodeIgniter\Config\BaseService;
@@ -37,5 +38,14 @@ class Services extends BaseService
         }
 
         return new RedisClient();
+    }
+
+    public static function monitor($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('monitor');
+        }
+
+        return new Monitor();
     }
 }
